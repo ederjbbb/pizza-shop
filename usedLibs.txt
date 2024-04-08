@@ -1,0 +1,13 @@
+
+
+
+shadcn/ui for css
+helmet for templates / page titles
+sonner as toast
+
+ract-hook-form
+zod
+
+eslint
+prittier
+
