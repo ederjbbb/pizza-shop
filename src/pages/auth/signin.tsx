@@ -17,7 +17,11 @@ export function SignIn (){
     async function handleSignIn (data : SignInForm) {
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000))
-        toast.success('Link de acesso enviado para seu e-mail',{className: 'bg-green-500',})
+            toast.success('Cadastramento feito com sucesso', {
+                action: {
+                  onClick: () => handleSignIn(data)  
+                },
+            })
         } catch (error) {
            toast.error('E-mail invalido, verifique seu se esta correto', {className:'bg-red-500 text-yellow-300'}) 
         }

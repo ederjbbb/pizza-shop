@@ -1,9 +1,10 @@
+import { Link, useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import { ClipLoader } from 'react-spinners';
 import { Helmet } from "react-helmet-async";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
 import { toast } from 'sonner';
 import { useForm } from "react-hook-form";
 import  { z } from 'zod'
@@ -18,11 +19,20 @@ const signUpFormSchema = z.object({
 type SignUpForm = z.infer<typeof signUpFormSchema>
 export function SignUp (){
 
+    const navigate = useNavigate()
     async function handleSignUp (data : SignUpForm) {
         try {
-        
+            console.log(data)
+
+            toast.success('Cadastramento realizado com sucesso',{
+                className:'bg-green-500',
+                action: {
+                    label: 'Login',
+                    onClick: () => navigate('/signin')
+                },
+            })
         } catch (error) {
-           toast.error('E-mail invalido, verifique seu se esta correto', {className:'bg-red-500 text-yellow-300'}) 
+           toast.error('Erro com cadastramento', {className:'bg-red-500 text-yellow-300'}) 
         }
         
     }
@@ -47,18 +57,37 @@ export function SignUp (){
 
                     <form className="space-y-4 w-full" onSubmit={handleSubmit(handleSignUp)}>
                         <div className="space-y-4">
+                            <Label htmlFor='restaurantName'>Nome do estabelecimento</Label>
+                            <Input  id="restaurantName" type="text" {...register('restaurantName')}/>
+                        </div>
+                        <div className="space-y-4">
+                            <Label htmlFor='managerName'>Seu nome</Label>
+                            <Input  id="managerName" type="text" {...register('managerName')}/>
+                        </div>
+                        <div className="space-y-4">
                             <Label htmlFor='email'>Seu E-mail</Label>
                             <Input  id="email" type="email" {...register('email')}/>
+                        </div>
+                        <div className="space-y-4">
+                            <Label htmlFor='phone'>Seu telefone</Label>
+                            <Input  id="phone" type="tel" {...register('phone')}/>
                         </div>
                         {isSubmitting ? 
                         <div className="flex items-center justify-center p-2 bg-gray-500 border-radius rounded-md ">
                             <ClipLoader size={24}/>
                         </div> 
                         :<Button className="w-full">Cadastrar</Button>}
+                       
                     </form>
+                    
                </div>
+               
            </div>
-                  
+           <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
+           Ao continuar voce concordda com  
+           <a href='#' className='underline underline-offset-4'> termos</a> e 
+           <a className='underline underline-offset-4'href='#'> politica de privacidade</a>
+                        </p>
 
         </>
     )
